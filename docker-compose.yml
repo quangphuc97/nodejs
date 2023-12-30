@@ -1,0 +1,38 @@
+version: '1'
+services:
+  backend:
+    build:
+      context: backend
+    container_name: backend
+    working_dir: /usr/src/app
+    networks:
+      - my-network
+    volumes:
+      - ./backend:/usr/src/app
+      - /usr/src/app/node_modules
+    command: npm run start
+    tty: true
+    ports:
+      - "3000:3000"
+    environment:
+      MONGO_USER: ${MONGO_USER}
+      MONGO_PASS: ${MONGO_PASS}
+      MONGO_DB: ${MONGO_DATABASE}
+  mongodb:
+    container_name: mongodb
+    image: mongo:5.0.9
+    volumes:
+      - mongo_data:/data/db
+    ports:
+      - "27017:27017"
+    networks:
+      - my-network
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASS}
+      MONGO_INITDB_DATABASE: ${MONGO_DATABASE}
+networks:
+  my-network:
+    driver: bridge
+volumes:
+  mongo_data:

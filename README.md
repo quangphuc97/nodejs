@@ -9,3 +9,4 @@
 # Enviroment url:
 - Backend: localhost:3000
 - MongoDB: localhost:27017
+- Grapqh: localhost:3000/graphql

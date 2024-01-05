@@ -12,7 +12,7 @@ exports.create = (req, res) => {
   let todo = new TodoSchema(value);
   todo
     .save()
-    .then(() => res.status(201).send("Todo created"))
+    .then(() => res.status(201).send({ message:"Todo created"}))
     .catch((err) => res.status(500).send(err));
 };
 

@@ -1,5 +1,5 @@
 from node:alpine
-WORKDIR /usr/src/backend
+WORKDIR /usr/src/frontend
 COPY . .
 RUN npm install
-EXPOSE 3000
+EXPOSE 3001

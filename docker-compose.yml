@@ -4,12 +4,12 @@ services:
     build:
       context: backend
     container_name: backend
-    working_dir: /usr/src/app
+    working_dir: /usr/src/backend
     networks:
       - my-network
     volumes:
-      - ./backend:/usr/src/app
-      - /usr/src/app/node_modules
+      - ./backend:/usr/src/backend
+      - /usr/src/backend/node_modules
     command: npm run start
     tty: true
     ports:
@@ -18,6 +18,24 @@ services:
       MONGO_USER: ${MONGO_USER}
       MONGO_PASS: ${MONGO_PASS}
       MONGO_DB: ${MONGO_DATABASE}
+  frontend:
+    build:
+      context: frontend
+    container_name: frontend
+    working_dir: /usr/src/frontend
+    networks:
+      - my-network
+    volumes:
+      - ./frontend:/usr/src/frontend
+      - /usr/src/frontend/node_modules
+    command: npm run start
+    tty: true
+    ports:
+      - "3001:3001"
+    environment:
+      REACT_URL_BACKEND: ${REACT_URL_BACKEND}
+      CHOKIDAR_USEPOLLING: true
+      WATCHPACK_POLLING: true
   mongodb:
     container_name: mongodb
     image: mongo:5.0.9
